@@ -1,0 +1,28 @@
+//by yujing
+#include <iostream>
+#include <stdio.h>
+#include <string.h>
+using namespace std;
+
+int t[20] = {0,1,5,2,8,3,9,2,8,7,7,8,4,7,3,8,4,1,5,4};
+int main(){
+	char num[100];
+	int slen, last_2 = 0, ans;
+	FILE *fp;
+	fp = stdin; //fopen("last_digit.txt", "r");
+	fscanf(fp, "%s", num);
+	while(strcmp(num, "0") != 0){
+        //printf("num = %s\n", num);
+        slen = strlen(num);
+        //printf("slen = %d\n", slen);
+        if(slen == 1) printf("%d\n", t[num[0]-'0']);
+        else{
+            last_2 = (num[slen-2]-'0')*10 + (num[slen-1]-'0');
+            ans = (t[last_2%20] + (last_2/20)*4) % 10;
+            printf("%d\n", ans);
+        }
+        fscanf(fp, "%s", num);
+	}
+	//fclose(fp);
+	return 0;
+}
