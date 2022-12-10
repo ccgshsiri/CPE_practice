@@ -1,0 +1,33 @@
+//by yujing
+#include <stdio.h>
+
+int f(int, int *); // recursion of 3n+1
+int main(){
+	int x, y, start, end, cnt, max;
+	while(scanf("%d%d", &x, &y)!=EOF){
+		max=0;
+		if(x>y){
+			start=y;
+			end=x;
+		}
+		else{
+			start=x;
+			end=y;
+		}
+		for(start ; start<=end ; start++){
+			cnt=0;
+			f(start, &cnt);
+			if(cnt>max) max=cnt;
+		}
+		printf("%d %d %d\n", x, y, max);
+	}
+}
+
+int f(int i, int *cnt){
+	(*cnt)++;
+	if(i==1) return 1;
+	else{
+		if(i%2==1)return f(3*i+1, cnt);
+		else return f(i/2, cnt);
+	}
+}
