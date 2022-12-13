@@ -1,0 +1,50 @@
+//by yujing
+#include <stdio.h>
+#include <string.h>
+
+char maxsymbol(char *);
+long long int total(char *, int);
+long long int power(int, int);
+int main(){
+	char inp[100];
+	int N;
+	long long int totaln;
+	while(scanf("%s", inp)!=EOF){
+		totaln=0;
+		if(maxsymbol(inp)>='0' && maxsymbol(inp)<='9') N=maxsymbol(inp)-'0'+1;
+		else if(maxsymbol(inp)>='A' && maxsymbol(inp)<='Z') N=maxsymbol(inp)-'A'+10+1;
+		else N=maxsymbol(inp)-'a'+36+1;
+		//printf("N=%d\n",N);
+		totaln = total(inp, N);
+		//printf("totaln=%lld\n", totaln);
+		while(totaln%(N-1)!=0){
+			N++;
+			totaln=total(inp, N);
+		}
+		if(N<62) printf("%d\n", N);
+		else printf("such number is impossible!\n");
+		scanf("%*c");
+	}
+}
+char maxsymbol(char *inp){
+	char maxc=inp[0];
+	for(int i=0 ; i<strlen(inp) ; i++)
+		if(inp[i]>maxc) maxc=inp[i];
+	return maxc;
+}
+long long int total(char *inp, int N){
+	long long int result=0;
+	for(int i=0 ; i<strlen(inp) ; i++){
+		if(maxsymbol(inp)>='0' && maxsymbol(inp)<='9') result+=(inp[i]-'0')*power(N, strlen(inp)-1-i);
+		else if(maxsymbol(inp)>='A' && maxsymbol(inp)<='Z')result+=(inp[i]-'A'+10)*power(N, strlen(inp)-1-i);
+		else result+=(inp[i]-'a'+36)*power(N, strlen(inp)-1-i);
+		//printf("result=%lld\n", result);
+	}
+	return result;
+}
+long long int power(int a, int n){
+	long long int result=1;
+	for(int i=0 ; i<n ; i++)
+		result*=a;
+	return result;
+}
